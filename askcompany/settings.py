@@ -2,6 +2,11 @@ from pathlib import Path
 import environ
 import os
 
+# pydenticon python 3.10 부터 지원안되는 문제 해결
+import collections
+if not hasattr(collections, 'Callable'):
+    collections.Callable = collections.abc.Callable
+
 env = environ.Env(
     # set casting, default value
     DEBUG=(bool, False)
@@ -30,8 +35,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # third apps
-    "debug_toolbar",
+    'bootstrap4', # pip3 install django-bootstrap4
+    "debug_toolbar", # version 3.3 권장
+    "django_pydenticon",
     # local apps
+    "accounts",
 ]
 
 MIDDLEWARE = [
@@ -78,6 +86,8 @@ DATABASES = {
     }
 }
 
+# AUTH_USER_MODEL="auth.User" ## 기본 설정 (커스텀 시 처음 설정 권장)
+AUTH_USER_MODEL="accounts.User"
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
